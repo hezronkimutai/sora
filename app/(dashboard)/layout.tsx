@@ -22,8 +22,14 @@ export default function DashboardLayout({
             </div>
             <div className="flex items-center gap-4">
               <UserButton afterSignOutUrl="/" />
-              <SignOutButton signOutCallback={() => router.push("/")}>
-                <button className="text-gray-600 hover:text-gray-900">
+              <SignOutButton>
+                <button
+                  className="text-gray-600 hover:text-gray-900"
+                  onClick={() => {
+                    console.log('[SignOut] Header sign-out clicked');
+                    window.location.replace('/');
+                  }}
+                >
                   Sign Out
                 </button>
               </SignOutButton>

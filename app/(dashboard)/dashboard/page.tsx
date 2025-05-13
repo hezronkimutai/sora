@@ -8,8 +8,7 @@ import { UploadButton } from "@/components/files/upload-button";
 import { db } from "@/lib/db";
 
 export default async function DashboardPage() {
-  // Ensure headers are properly awaited
-  await headers();
+  const headersList = await headers();
   const { userId } = await auth();
   
   if (!userId) {

@@ -6,6 +6,7 @@ export default authMiddleware({
     "/",
     "/sign-in",
     "/sign-up",
+    "/sign-out",
     "/sso-callback",
     "/sign-up/sso-callback",
     "/sign-in/sso-callback"

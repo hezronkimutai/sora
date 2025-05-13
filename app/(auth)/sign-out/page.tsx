@@ -1,10 +1,14 @@
 "use client";
 
 import { SignOutButton } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
 
 export default function SignOutPage() {
-  const router = useRouter();
+  console.log('[SignOut] Page mounted');
+
+  const handleSignOut = () => {
+    console.log('[SignOut] Dedicated page sign-out clicked');
+    window.location.replace('/');
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -18,8 +22,11 @@ export default function SignOutPage() {
           </p>
         </div>
         <div className="flex justify-center">
-          <SignOutButton signOutCallback={() => router.push("/")}>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
+          <SignOutButton>
+            <button 
+              onClick={handleSignOut}
+              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+            >
               Sign Out
             </button>
           </SignOutButton>
