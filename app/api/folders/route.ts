@@ -6,10 +6,14 @@ import { db } from "@/lib/db";
 
 export const dynamic = 'force-dynamic';
 
-// Validation schema for folder creation
+// Validation schemas
 const createFolderSchema = z.object({
   name: z.string().min(1, "Folder name is required"),
   parentId: z.string().optional(),
+});
+
+const renameFolderSchema = z.object({
+  name: z.string().min(1, "Folder name is required"),
 });
 
 export async function POST(req: Request) {
@@ -151,6 +155,60 @@ export async function DELETE(req: Request) {
     return new NextResponse(null, { status: 204 });
   } catch (error) {
     console.error("Error deleting folder:", error);
+    return new NextResponse("Internal Server Error", { status: 500 });
+  }
+}
+
+export async function PATCH(req: Request) {
+  try {
+    await headers();
+    const { userId } = await auth();
+
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const { searchParams } = new URL(req.url);
+    const folderId = searchParams.get("id");
+
+    if (!folderId) {
+      return new NextResponse("Folder ID is required", { status: 400 });
+    }
+
+    const json = await req.json();
+    const body = renameFolderSchema.parse(json);
+
+    // Verify folder ownership
+    const folder = await db.folder.findFirst({
+      where: {
+        id: folderId,
+        userId,
+      },
+    });
+
+    if (!folder) {
+      return new NextResponse("Folder not found", { status: 404 });
+    }
+
+    // Update folder name
+    const updatedFolder = await db.folder.update({
+      where: {
+        id: folderId,
+      },
+      data: {
+        name: body.name,
+      },
+    });
+
+    return NextResponse.json(updatedFolder);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: error.errors },
+        { status: 400 }
+      );
+    }
+    console.error("Error renaming folder:", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }

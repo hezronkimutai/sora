@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 
 export const dynamic = 'force-dynamic';
 
+// Validation schemas
 const createFileSchema = z.object({
   name: z.string().min(1, "File name is required"),
   type: z.string(),
@@ -13,6 +14,10 @@ const createFileSchema = z.object({
   cloudinaryId: z.string(),
   publicId: z.string(),
   folderId: z.string().optional().nullable(), // Allow null from input
+});
+
+const renameFileSchema = z.object({
+  name: z.string().min(1, "File name is required"),
 });
 
 export async function POST(req: Request) {
@@ -134,6 +139,60 @@ export async function DELETE(req: Request) {
     return new NextResponse(null, { status: 204 });
   } catch (error) {
     console.error("Error deleting file:", error);
+    return new NextResponse("Internal Server Error", { status: 500 });
+  }
+}
+
+export async function PATCH(req: Request) {
+  try {
+    headers(); // Ensure headers are read before auth
+    const { userId } = await auth();
+
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const { searchParams } = new URL(req.url);
+    const fileId = searchParams.get("id");
+
+    if (!fileId) {
+      return new NextResponse("File ID is required", { status: 400 });
+    }
+
+    const json = await req.json();
+    const body = renameFileSchema.parse(json);
+
+    // Verify file ownership
+    const file = await db.file.findFirst({
+      where: {
+        id: fileId,
+        userId,
+      },
+    });
+
+    if (!file) {
+      return new NextResponse("File not found", { status: 404 });
+    }
+
+    // Update file name
+    const updatedFile = await db.file.update({
+      where: {
+        id: fileId,
+      },
+      data: {
+        name: body.name,
+      },
+    });
+
+    return NextResponse.json(updatedFile);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: error.errors },
+        { status: 400 }
+      );
+    }
+    console.error("Error renaming file:", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
