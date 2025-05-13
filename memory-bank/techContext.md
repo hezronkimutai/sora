@@ -4,9 +4,9 @@
 
 ### Prerequisites
 - Node.js (v18.17 or higher)
-- pnpm (v8.0 or higher)
-- PostgreSQL (v14 or higher)
-- AWS Account with S3 access
+- npm (v8.0 or higher)
+- SQLite (v3.0 or higher)
+- Cloudinary account
 - Git
 
 ### Environment Variables
@@ -15,13 +15,12 @@
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 # Database
-DATABASE_URL="postgresql://user:password@localhost:5432/gdrive_clone"
+DATABASE_URL="file:./dev.db"
 
-# AWS S3
-NEXT_PUBLIC_AWS_REGION=
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_S3_BUCKET_NAME=
+# Cloudinary
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
 
 # Authentication (Clerk)
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
@@ -155,7 +154,7 @@ module.exports = {
 ## Database Schema (schema.prisma)
 ```prisma
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -188,7 +187,8 @@ model File {
   id        String   @id @default(cuid())
   name      String
   type      String
-  s3Key     String
+  cloudinaryId String
+  publicId    String
   size      Int
   userId    String
   folderId  String
@@ -199,11 +199,11 @@ model File {
 }
 ```
 
-## AWS S3 Configuration
-- Bucket with public access blocked
-- CORS configuration for upload
-- Lifecycle rules for file management
-- IAM user with limited permissions
+## Cloudinary Configuration
+- Secure upload configuration
+- Image optimization settings
+- Media upload presets
+- Restricted access settings
 
 ## Development Workflow
 1. Local setup with `.env` configuration
@@ -215,6 +215,6 @@ model File {
 
 ## Deployment
 - Frontend: Vercel
-- Database: Supabase
-- Storage: AWS S3
+- Database: SQLite (deployed with application)
+- Storage: Cloudinary
 - Authentication: Clerk

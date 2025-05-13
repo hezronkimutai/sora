@@ -34,9 +34,9 @@ gantt
    - [ ] User session management
 
 3. **Database & Storage**
-   - [ ] PostgreSQL database setup
+   - [ ] SQLite database setup
    - [ ] Prisma configuration
-   - [ ] AWS S3 bucket creation
+   - [ ] Cloudinary account setup
    - [ ] Storage service implementation
 
 4. **Core Features**
@@ -81,12 +81,12 @@ gantt
    - Reason: Comprehensive auth features and easy integration
 
 3. **Database Choice**
-   - Chosen: PostgreSQL with Prisma
-   - Reason: Type safety and robust relationships
+   - Chosen: SQLite with Prisma
+   - Reason: Lightweight, portable, and zero-configuration
 
 4. **File Storage**
-   - Chosen: AWS S3
-   - Reason: Reliable and scalable solution
+   - Chosen: Cloudinary
+   - Reason: Built-in optimization and simple integration
 
 5. **UI Framework**
    - Chosen: TailwindCSS with shadcn/ui
@@ -114,7 +114,7 @@ gantt
 ### Performance Targets
 - Page load time: < 2s
 - File upload speed: 1MB/s minimum
-- API response time: < 100ms
+- API response time: < 200ms (local SQLite)
 
 ### Quality Metrics
 - Test coverage: > 80%

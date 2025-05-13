@@ -20,23 +20,23 @@ Building a Google Drive clone with emphasis on:
    - Built-in user management
    - Easy integration with Next.js
 
-3. **Database Choice (PostgreSQL + Prisma)**
-   - Strong data consistency
-   - Excellent TypeScript support
-   - Powerful querying capabilities
-   - Type-safe database operations
+3. **Database Choice (SQLite + Prisma)**
+    - Lightweight and portable
+    - Zero-configuration database
+    - File-based storage
+    - Type-safe database operations
 
-4. **File Storage (AWS S3)**
-   - Reliable and scalable
-   - Cost-effective for storage
-   - Strong security features
-   - Good developer experience
+4. **File Storage (Cloudinary)**
+    - Built-in image optimization
+    - Automatic CDN delivery
+    - Media transformation features
+    - Simple upload integration
 
 ### Implementation Patterns
 1. **File Upload Strategy**
-   - Direct-to-S3 upload using presigned URLs
-   - Progress tracking with client-side hooks
-   - Metadata stored in PostgreSQL
+    - Direct-to-Cloudinary upload with signed URLs
+    - Progress tracking with client-side hooks
+    - Metadata stored in SQLite
 
 2. **Folder Structure**
    - Recursive folder relationships
@@ -78,11 +78,11 @@ Building a Google Drive clone with emphasis on:
 - [ ] Configure Clerk authentication
 
 ### 2. Database & Storage Setup (Day 2)
-- [ ] Set up PostgreSQL database
+- [ ] Set up SQLite database
 - [ ] Configure Prisma
 - [ ] Create database schema
-- [ ] Set up AWS S3 bucket
-- [ ] Configure AWS credentials
+- [ ] Set up Cloudinary account
+- [ ] Configure Cloudinary credentials
 
 ### 3. Core Features (Days 3-4)
 - [ ] Implement user authentication
