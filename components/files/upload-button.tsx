@@ -1,0 +1,120 @@
+"use client";
+
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+
+export function UploadButton() {
+  const [isUploading, setIsUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  const handleUpload = async (file: File) => {
+    try {
+      setIsUploading(true);
+      setProgress(0);
+
+      // Get upload URL and signature
+      const uploadUrlRes = await fetch("/api/files/upload-url");
+      const { uploadUrl, fields } = await uploadUrlRes.json();
+
+      // Create form data for Cloudinary
+      const formData = new FormData();
+      Object.entries(fields).forEach(([key, value]) => {
+        formData.append(key, value as string);
+      });
+      formData.append("file", file);
+
+      // Upload to Cloudinary with progress tracking
+      const xhr = new XMLHttpRequest();
+      
+      xhr.upload.addEventListener("progress", (event) => {
+        if (event.lengthComputable) {
+          const percentage = Math.round((event.loaded * 100) / event.total);
+          setProgress(percentage);
+        }
+      });
+
+      xhr.onreadystatechange = async function() {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            const result = JSON.parse(xhr.responseText);
+            
+            // Create file record in database
+            const fileData = {
+              name: file.name,
+              type: file.type,
+              size: file.size,
+              cloudinaryId: result.public_id,
+              publicId: result.secure_url,
+            };
+
+            await fetch("/api/files", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(fileData),
+            });
+
+            router.refresh();
+          } else {
+            console.error("Upload failed");
+          }
+          setIsUploading(false);
+          setProgress(0);
+        }
+      };
+
+      xhr.open("POST", uploadUrl, true);
+      xhr.send(formData);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      setIsUploading(false);
+      setProgress(0);
+    }
+  };
+
+  return (
+    <div className="relative">
+      <input
+        type="file"
+        ref={fileInputRef}
+        className="hidden"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) handleUpload(file);
+        }}
+      />
+      <button
+        onClick={() => fileInputRef.current?.click()}
+        disabled={isUploading}
+        className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className="w-5 h-5"
+        >
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+        </svg>
+        {isUploading ? `Uploading ${progress}%` : "Upload File"}
+      </button>
+
+      {isUploading && (
+        <div className="fixed bottom-4 right-4 bg-white p-4 rounded-lg shadow-lg">
+          <div className="text-sm font-medium mb-2">Uploading...</div>
+          <div className="w-64 h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-blue-600 transition-all duration-300"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
