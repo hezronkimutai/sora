@@ -39,5 +39,6 @@ export interface UploadUrlResponse {
   };
 }
 
-export interface FileResponse extends File {}
-export interface FolderResponse extends Folder {}
+// Use File and Folder types directly instead of empty interfaces
+export type { File as FileResponse };
+export type { Folder as FolderResponse };

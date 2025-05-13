@@ -27,16 +27,20 @@ Building a Google Drive clone with emphasis on:
     - Type-safe database operations
 
 4. **File Storage (Cloudinary)**
-    - Built-in image optimization
-    - Automatic CDN delivery
-    - Media transformation features
-    - Simple upload integration
+    - Built-in image optimization and transformations
+    - Automatic CDN delivery with secure URLs
+    - Direct client-side uploads with signed URLs
+    - Preview support for images and PDFs
+    - Automatic file organization in folders
+    - Real-time upload progress tracking
 
 ### Implementation Patterns
 1. **File Upload Strategy**
-    - Direct-to-Cloudinary upload with signed URLs
-    - Progress tracking with client-side hooks
-    - Metadata stored in SQLite
+    - Secure signed URLs for direct-to-Cloudinary upload
+    - Client-side upload progress tracking
+    - File metadata and relationships in SQLite
+    - File type validation and size limits
+    - Automatic file preview generation
 
 2. **Folder Structure**
    - Recursive folder relationships
@@ -44,9 +48,18 @@ Building a Google Drive clone with emphasis on:
    - Cascade deletions for cleanup
 
 3. **UI Components**
-   - ShadCN UI for consistent design
-   - Custom hooks for file operations
-   - Responsive layout system
+    - ShadCN UI components integrated:
+      - Dialog for rename operations
+      - DropdownMenu for file actions
+      - Progress indicators for uploads
+      - Modal for file previews
+    - Custom components:
+      - FileList with grid/list views
+      - FolderList with navigation
+      - PreviewModal for file viewing
+      - RenameDialog for file/folder rename
+    - Responsive layout system with Tailwind
+    - Client-side state management with React hooks
 
 ## Current Considerations
 
@@ -70,40 +83,45 @@ Building a Google Drive clone with emphasis on:
 
 ## Next Steps
 
-### 1. Project Setup (Day 1)
-- [ ] Initialize Next.js project
-- [ ] Configure TypeScript
-- [ ] Set up Tailwind CSS
-- [ ] Install dependencies
-- [ ] Configure Clerk authentication
+### 1. Project Setup ✅
+- [x] Initialize Next.js project
+- [x] Configure TypeScript
+- [x] Set up Tailwind CSS
+- [x] Install dependencies
+- [x] Configure Clerk authentication
 
-### 2. Database & Storage Setup (Day 2)
-- [ ] Set up SQLite database
-- [ ] Configure Prisma
-- [ ] Create database schema
-- [ ] Set up Cloudinary account
-- [ ] Configure Cloudinary credentials
+### 2. Database & Storage Setup ✅
+- [x] Set up SQLite database
+- [x] Configure Prisma
+- [x] Create database schema
+- [x] Set up Cloudinary account
+- [x] Configure Cloudinary credentials
 
-### 3. Core Features (Days 3-4)
-- [ ] Implement user authentication
-- [ ] Create folder structure
-- [ ] Implement file upload
-- [ ] Add file/folder operations
-- [ ] Create file preview system
+### 3. Core Features (In Progress)
+- [x] Implement user authentication
+- [x] Create folder structure
+- [x] Implement file upload
+- [x] Add file/folder operations
+- [x] Create file preview system
+- [ ] Add error notifications
+- [ ] Implement file search
+- [ ] Add bulk operations
 
-### 4. UI Development (Day 5)
-- [ ] Build navigation component
-- [ ] Create file/folder grid/list view
-- [ ] Implement responsive design
-- [ ] Add loading states
-- [ ] Implement error handling
+### 4. UI Development (In Progress)
+- [x] Build navigation component
+- [x] Create file/folder grid/list view
+- [x] Implement responsive design
+- [x] Add loading states
+- [x] Implement error handling
+- [ ] Add drag-and-drop support
+- [ ] Improve mobile navigation
 
-### 5. Testing & Deployment (Days 6-7)
+### 5. Testing & Deployment (Pending)
 - [ ] Write unit tests
 - [ ] Perform integration testing
 - [ ] Deploy to Vercel
 - [ ] Set up production database
-- [ ] Configure production S3 bucket
+- [ ] Configure production monitoring
 
 ## Project Insights
 

@@ -17,8 +17,8 @@ flowchart TD
     end
 
     subgraph External
-        S3[AWS S3]
-        DB[(PostgreSQL)]
+        CDN[Cloudinary CDN]
+        DB[(SQLite)]
     end
 
     UI <--> SR
@@ -27,7 +27,7 @@ flowchart TD
     AR <--> AUTH
     AR <--> PM
     PM <--> DB
-    AR <--> S3
+    AR <--> CDN
 ```
 
 ## Design Patterns
@@ -87,7 +87,8 @@ erDiagram
         string id PK
         string name
         string type
-        string s3Key
+        string cloudinaryId
+        string publicId
         string userId FK
         string folderId FK
         integer size

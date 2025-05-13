@@ -1,4 +1,3 @@
-import { headers } from 'next/headers';
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { FolderList } from "@/components/folders/folder-list";
@@ -8,14 +7,12 @@ import { UploadButton } from "@/components/files/upload-button";
 import { db } from "@/lib/db";
 
 export default async function DashboardPage() {
-  const headersList = await headers();
   const { userId } = await auth();
   
   if (!userId) {
     redirect("/sign-in");
   }
 
-  // Fetch data server-side
   const [folders, files] = await Promise.all([
     db.folder.findMany({
       where: {

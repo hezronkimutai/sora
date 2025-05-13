@@ -1,4 +1,3 @@
-import { FolderTreeContainer } from "@/components/folders/folder-tree-container";
 import { SignOutButton, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 
@@ -29,17 +28,9 @@ export default async function FolderLayout({
         </div>
       </header>
 
-      <div className="flex h-[calc(100vh-4rem)]">
-        {/* Sidebar */}
-        <div className="w-64 bg-white border-r p-4 overflow-y-auto">
-          <FolderTreeContainer />
-        </div>
-
-        {/* Main Content */}
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="max-w-7xl mx-auto">{children}</div>
-        </main>
-      </div>
+      <main className="h-[calc(100vh-4rem)] overflow-y-auto p-6">
+        <div className="max-w-7xl mx-auto">{children}</div>
+      </main>
     </div>
   );
 }

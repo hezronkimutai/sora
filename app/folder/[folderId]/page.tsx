@@ -7,15 +7,18 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
-interface FolderPageProps {
-  params: {
-    folderId: string;
-  };
-}
+export const dynamic = "force-dynamic";
 
-export default async function FolderPage({ params }: FolderPageProps) {
+export const revalidate = 0;
+
+export default async function Page({ 
+  params 
+}: { 
+  params: Promise<{ folderId: string }> 
+}) {
+  const resolvedParams = await params;
+  const { folderId } = resolvedParams;
   const { userId } = await auth();
-  const { folderId } = params;
 
   if (!userId) {
     redirect("/sign-in");
@@ -61,7 +64,6 @@ export default async function FolderPage({ params }: FolderPageProps) {
     }),
   ]);
 
-  // Basic breadcrumb
   const breadcrumbs = [
     { name: "Dashboard", href: "/dashboard" },
     { name: currentFolder.name, href: `/folder/${folderId}` },

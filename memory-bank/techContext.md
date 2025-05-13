@@ -17,10 +17,11 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 # Database
 DATABASE_URL="file:./dev.db"
 
-# Cloudinary
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
-CLOUDINARY_API_KEY=
-CLOUDINARY_API_SECRET=
+# Cloudinary Configuration
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=    # Cloud name for client-side operations
+CLOUDINARY_API_KEY=                   # API Key for signed uploads
+CLOUDINARY_API_SECRET=                # API Secret for request signing
+CLOUDINARY_FOLDER=                    # Upload folder name
 
 # Authentication (Clerk)
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
@@ -200,10 +201,23 @@ model File {
 ```
 
 ## Cloudinary Configuration
-- Secure upload configuration
-- Image optimization settings
-- Media upload presets
-- Restricted access settings
+- **Upload Settings**
+  - Signed uploads for security
+  - Client-side direct upload
+  - Progress tracking
+  - File size validation
+
+- **Resource Management**
+  - Automatic file organization in folders
+  - Secure resource delivery
+  - Image optimization and transformations
+  - PDF preview support
+
+- **Integration Features**
+  - Direct-to-Cloudinary upload with signed URLs
+  - Preview generation for images and PDFs
+  - Secure file deletion with resource cleanup
+  - Public ID management for file access
 
 ## Development Workflow
 1. Local setup with `.env` configuration

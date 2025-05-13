@@ -2,14 +2,15 @@
 
 import type { Folder } from "@/lib/types";
 import { useRouter } from "next/navigation";
-import { 
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger 
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 import { MoreVertical, Pencil, Trash } from "lucide-react";
+import { RenameDialog } from "@/components/ui/rename-dialog";
 
 interface FolderListProps {
   folders: Folder[];
@@ -18,6 +19,8 @@ interface FolderListProps {
 export function FolderList({ folders }: FolderListProps) {
   const router = useRouter();
   const [isDeleting, setIsDeleting] = useState<string | null>(null);
+  const [renameDialogOpen, setRenameDialogOpen] = useState(false);
+  const [selectedFolder, setSelectedFolder] = useState<Folder | null>(null);
 
   const handleDelete = async (folderId: string) => {
     try {
@@ -39,8 +42,44 @@ export function FolderList({ folders }: FolderListProps) {
     }
   };
 
+  const handleRename = async (newName: string) => {
+    if (!selectedFolder) return;
+
+    try {
+      const response = await fetch(`/api/folders?id=${selectedFolder.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: newName }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to rename folder');
+      }
+
+      router.refresh();
+    } catch (error) {
+      console.error('Error renaming folder:', error);
+      // TODO: Add error toast
+    }
+  };
+
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+    <>
+      {selectedFolder && (
+        <RenameDialog
+          isOpen={renameDialogOpen}
+          onClose={() => {
+            setRenameDialogOpen(false);
+            setSelectedFolder(null);
+          }}
+          onRename={handleRename}
+          currentName={selectedFolder.name}
+          type="folder"
+        />
+      )}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
       {folders.map((folder) => (
         <div
           key={folder.id}
@@ -74,7 +113,12 @@ export function FolderList({ folders }: FolderListProps) {
                 <MoreVertical className="h-4 w-4 text-gray-500 hover:text-gray-700" />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem disabled>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setSelectedFolder(folder);
+                    setRenameDialogOpen(true);
+                  }}
+                >
                   <Pencil className="h-4 w-4 mr-2" />
                   Rename
                 </DropdownMenuItem>
@@ -91,6 +135,7 @@ export function FolderList({ folders }: FolderListProps) {
           </div>
         </div>
       ))}
-    </div>
+      </div>
+    </>
   );
 }

@@ -5,7 +5,7 @@ import { generateUploadSignature } from "@/lib/cloudinary";
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     headers(); // Ensure headers are read before auth
     const { userId } = await auth();

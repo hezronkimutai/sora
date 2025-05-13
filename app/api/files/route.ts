@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { z } from "zod";
 import { db } from "@/lib/db";
+import { v2 as cloudinary } from "cloudinary";
 
 export const dynamic = 'force-dynamic';
 
@@ -126,7 +127,6 @@ export async function DELETE(req: Request) {
     }
 
     // Delete file from Cloudinary
-    const cloudinary = require("cloudinary").v2;
     await cloudinary.uploader.destroy(file.cloudinaryId);
 
     // Delete file record
