@@ -1,8 +1,8 @@
-import { SignOutButton, UserButton } from "@clerk/nextjs";
 import { FolderTreeContainer } from "@/components/folders/folder-tree-container";
+import { SignOutButton, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 
-export default async function DashboardLayout({
+export default async function FolderLayout({
   children,
 }: {
   children: React.ReactNode;

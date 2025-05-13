@@ -1,9 +1,4 @@
-import { headers } from 'next/headers';
-
-export default async function NotFound() {
-  // Ensure headers are properly awaited
-  await headers();
-  
+export default function NotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="text-center">

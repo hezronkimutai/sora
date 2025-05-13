@@ -4,7 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 
-export function CreateFolderButton() {
+interface CreateFolderButtonProps {
+  parentId?: string;
+}
+
+export function CreateFolderButton({ parentId }: CreateFolderButtonProps) {
   const { getToken } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
@@ -24,7 +28,7 @@ export function CreateFolderButton() {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
         },
-        body: JSON.stringify({ name }),
+        body: JSON.stringify({ name, parentId }),
       });
 
       if (!response.ok) {
@@ -45,7 +49,7 @@ export function CreateFolderButton() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

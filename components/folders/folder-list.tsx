@@ -15,7 +15,7 @@ export function FolderList({ folders }: FolderListProps) {
       {folders.map((folder) => (
         <button
           key={folder.id}
-          onClick={() => router.push(`/dashboard/folder/${folder.id}`)}
+          onClick={() => router.push(`/folder/${folder.id}`)}
           className="p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
         >
           <div className="flex items-center gap-2">

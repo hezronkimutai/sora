@@ -3,7 +3,11 @@
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 
-export function UploadButton() {
+interface UploadButtonProps {
+  folderId?: string;
+}
+
+export function UploadButton({ folderId }: UploadButtonProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -47,6 +51,7 @@ export function UploadButton() {
               size: file.size,
               cloudinaryId: result.public_id,
               publicId: result.secure_url,
+              folderId,
             };
 
             await fetch("/api/files", {
@@ -89,7 +94,7 @@ export function UploadButton() {
       <button
         onClick={() => fileInputRef.current?.click()}
         disabled={isUploading}
-        className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50"
+        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

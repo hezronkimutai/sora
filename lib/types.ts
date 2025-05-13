@@ -22,6 +22,10 @@ export interface Folder {
   updatedAt: Date;
   children?: Folder[];
   files?: File[];
+  _count?: {
+    files: number;
+    children: number;
+  };
 }
 
 // API response types
