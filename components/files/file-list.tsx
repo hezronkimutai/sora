@@ -55,8 +55,14 @@ export function FileList({ files }: FileListProps) {
     }
   };
 
-  const handlePreview = async (fileId: string) => {
+  const handlePreview = async (fileId: string, fileType: string) => {
     try {
+      // For docx files, navigate to editor
+      if (fileType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+        router.push(`/document/${fileId}`);
+        return;
+      }
+
       const response = await fetch(`/api/files/preview?id=${fileId}`);
       if (!response.ok) {
         throw new Error('Failed to get file preview');
@@ -94,7 +100,25 @@ export function FileList({ files }: FileListProps) {
   };
 
   const getFileIcon = (type: string) => {
-    if (type.startsWith("video/")) {
+    // Check for docx files
+    if (type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className="w-6 h-6 text-blue-500"
+        >
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+          <line x1="10" y1="9" x2="8" y2="9" />
+        </svg>
+      );
+    } else if (type.startsWith("video/")) {
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -192,7 +216,7 @@ export function FileList({ files }: FileListProps) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuItem
-                    onClick={() => handlePreview(file.id)}
+                    onClick={() => handlePreview(file.id, file.type)}
                   >
                     <Eye className="h-4 w-4 mr-2" />
                     Preview

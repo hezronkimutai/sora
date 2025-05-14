@@ -4,6 +4,7 @@ import { FolderList } from "@/components/folders/folder-list";
 import { FileList } from "@/components/files/file-list";
 import { CreateFolderButton } from "@/components/folders/create-folder-button";
 import { UploadButton } from "@/components/files/upload-button";
+import { CreateDocumentButton } from "@/components/files/create-document-button";
 import { db } from "@/lib/db";
 
 export default async function DashboardPage() {
@@ -48,6 +49,7 @@ export default async function DashboardPage() {
         <h1 className="text-2xl font-bold text-foreground w-full sm:w-auto text-center sm:text-left">My Files</h1>
         <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
           <CreateFolderButton />
+          <CreateDocumentButton />
           <UploadButton />
         </div>
       </div>
