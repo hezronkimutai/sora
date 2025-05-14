@@ -24,7 +24,7 @@ export function FileList({ files }: FileListProps) {
   const [renameDialogOpen, setRenameDialogOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewData, setPreviewData] = useState<{
-    type: 'image' | 'pdf' | 'info';
+    type: 'image' | 'pdf' | 'video' | 'audio' | 'text' | 'info';
     url?: string;
     data?: {
       name: string;
@@ -94,7 +94,21 @@ export function FileList({ files }: FileListProps) {
   };
 
   const getFileIcon = (type: string) => {
-    if (type.startsWith("image/")) {
+    if (type.startsWith("video/")) {
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className="w-6 h-6 text-blue-500"
+        >
+          <polygon points="23 7 16 12 23 17 23 7" />
+          <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+        </svg>
+      );
+    } else if (type.startsWith("image/")) {
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"

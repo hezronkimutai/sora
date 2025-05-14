@@ -2,12 +2,13 @@
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import Image from "next/image";
+import { useEffect } from "react";
 
 interface PreviewModalProps {
   isOpen: boolean;
   onClose: () => void;
   previewData: {
-    type: 'image' | 'pdf' | 'info';
+    type: 'image' | 'pdf' | 'video' | 'audio' | 'text' | 'info';
     url?: string;
     data?: {
       name: string;
@@ -21,6 +22,14 @@ interface PreviewModalProps {
 
 export function PreviewModal({ isOpen, onClose, previewData }: PreviewModalProps) {
   if (!previewData) return null;
+  
+  useEffect(() => {
+    console.log('Preview Modal Data:', {
+      type: previewData.type,
+      url: previewData.url,
+      data: previewData.data
+    });
+  }, [previewData]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -28,6 +37,9 @@ export function PreviewModal({ isOpen, onClose, previewData }: PreviewModalProps
         <DialogTitle>
           {previewData.type === 'image' && 'Image Preview'}
           {previewData.type === 'pdf' && 'PDF Preview'}
+          {previewData.type === 'video' && 'Video Preview'}
+          {previewData.type === 'audio' && 'Audio Preview'}
+          {previewData.type === 'text' && 'Text Preview'}
           {previewData.type === 'info' && previewData.data?.name}
         </DialogTitle>
         {previewData.type === 'image' && previewData.url && (
@@ -48,6 +60,42 @@ export function PreviewModal({ isOpen, onClose, previewData }: PreviewModalProps
               src={previewData.url}
               className="w-full h-full"
               title="PDF Preview"
+            />
+          </div>
+        )}
+
+        {previewData.type === 'video' && previewData.url && (
+          <div className="relative w-full h-[80vh] flex items-center justify-center bg-black">
+            <video
+              key={previewData.url}
+              src={previewData.url}
+              controls
+              playsInline
+              className="max-w-full max-h-full"
+              style={{ maxHeight: 'calc(80vh - 100px)' }}
+              onError={(e) => console.error('Video loading error:', e)}
+            />
+          </div>
+        )}
+
+        {previewData.type === 'audio' && previewData.url && (
+          <div className="relative w-full p-4 flex items-center justify-center">
+            <audio
+              src={previewData.url}
+              controls
+              className="w-full"
+            >
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        )}
+
+        {previewData.type === 'text' && previewData.url && (
+          <div className="relative w-full h-[80vh]">
+            <iframe
+              src={previewData.url}
+              className="w-full h-full"
+              title="Text Preview"
             />
           </div>
         )}

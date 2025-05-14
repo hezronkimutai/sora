@@ -8,11 +8,12 @@ cloudinary.config({
   secure: true,
 });
 
-export function generateUploadSignature() {
+export function generateUploadSignature(resourceType: string = 'auto') {
   const timestamp = Math.round(new Date().getTime() / 1000);
   const params = {
     timestamp,
     folder: "drive-clone",
+    resource_type: resourceType
   };
 
   const signature = cloudinary.utils.api_sign_request(

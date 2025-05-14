@@ -19,7 +19,10 @@ export function UploadButton({ folderId }: UploadButtonProps) {
       setProgress(0);
 
       // Get upload URL and signature
-      const uploadUrlRes = await fetch("/api/files/upload-url");
+      console.log('Uploading file:', { name: file.name, type: file.type });
+      
+      // Pass file type to get correct upload configuration
+      const uploadUrlRes = await fetch(`/api/files/upload-url?type=${encodeURIComponent(file.type)}`);
       const { uploadUrl, fields } = await uploadUrlRes.json();
 
       // Create form data for Cloudinary
@@ -43,8 +46,9 @@ export function UploadButton({ folderId }: UploadButtonProps) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             const result = JSON.parse(xhr.responseText);
+            console.log('Cloudinary upload result:', result);
             
-            // Create file record in database
+            // Create file record in database with correct IDs
             const fileData = {
               name: file.name,
               type: file.type,
