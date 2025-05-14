@@ -1,9 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sora - File Management System
+
+A modern file management system built with Next.js that allows users to organize, upload, and preview files in a secure environment.
+
+## Features
+
+- 🔐 **Authentication**: Secure user authentication with SSO support
+- 📁 **File Management**: Upload, preview, and organize files
+- 📂 **Folder Organization**: Create and manage folders to keep files organized
+- 🎯 **Dashboard**: Intuitive dashboard interface for easy file access
+- 🌐 **Cloud Storage**: Cloudinary integration for reliable file storage
+
+## Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org) with TypeScript
+- **Styling**: [Tailwind CSS](https://tailwindcss.com)
+- **Database**: PostgreSQL with [Prisma](https://www.prisma.io) ORM
+- **File Storage**: [Cloudinary](https://cloudinary.com)
+- **Authentication**: Built-in auth system with SSO capabilities
+
+## Prerequisites
+
+- Node.js 20 or higher
+- PostgreSQL database
+- Cloudinary account
+- Environment variables (see `.env.example`)
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository and install dependencies:
 
+```bash
+git clone <repository-url>
+cd sora
+npm install
+```
+
+2. Set up your environment variables:
+```bash
+cp .env.example .env
+# Update .env with your values
+```
+
+3. Set up the database:
+```bash
+npx prisma migrate dev
+```
+
+4. Run the development server:
 ```bash
 npm run dev
 # or
@@ -16,21 +59,25 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/app` - Next.js app router pages and API routes
+- `/components` - Reusable UI components
+- `/lib` - Utility functions and database configuration
+- `/prisma` - Database schema and migrations
+- `/public` - Static assets
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+To learn more about the technologies used in this project:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Prisma Documentation](https://www.prisma.io/docs) - learn about Prisma ORM.
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs) - learn about Tailwind CSS.
+- [Cloudinary Documentation](https://cloudinary.com/documentation) - learn about Cloudinary.
 
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
