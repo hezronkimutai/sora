@@ -94,7 +94,7 @@ export function UploadButton({ folderId }: UploadButtonProps) {
       <button
         onClick={() => fileInputRef.current?.click()}
         disabled={isUploading}
-        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50"
+        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -110,11 +110,11 @@ export function UploadButton({ folderId }: UploadButtonProps) {
       </button>
 
       {isUploading && (
-        <div className="fixed bottom-4 right-4 bg-white p-4 rounded-lg shadow-lg">
-          <div className="text-sm font-medium mb-2">Uploading...</div>
-          <div className="w-64 h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div className="fixed bottom-4 right-4 bg-background p-4 rounded-lg shadow-lg">
+          <div className="text-sm font-medium mb-2 text-foreground">Uploading...</div>
+          <div className="w-64 h-2 bg-secondary/20 rounded-full overflow-hidden">
             <div
-              className="h-full bg-blue-600 transition-all duration-300"
+              className="h-full bg-accent transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>

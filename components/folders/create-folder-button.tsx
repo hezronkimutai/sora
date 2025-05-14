@@ -49,7 +49,7 @@ export function CreateFolderButton({ parentId }: CreateFolderButtonProps) {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -66,29 +66,29 @@ export function CreateFolderButton({ parentId }: CreateFolderButtonProps) {
 
       {isOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg w-full max-w-md">
-            <h2 className="text-xl font-semibold mb-4">Create New Folder</h2>
+          <div className="bg-background p-6 rounded-lg w-full max-w-md">
+            <h2 className="text-xl font-semibold mb-4 text-foreground">Create New Folder</h2>
             <form onSubmit={handleSubmit}>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Folder name"
-                className="w-full px-3 py-2 border rounded-md mb-4"
+                className="w-full px-3 py-2 border rounded-md mb-4 bg-background text-foreground border-input"
                 required
               />
               <div className="flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                  className="px-4 py-2 text-foreground/70 hover:text-foreground"
                   disabled={isLoading}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+                  className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50"
                   disabled={isLoading}
                 >
                   {isLoading ? "Creating..." : "Create"}

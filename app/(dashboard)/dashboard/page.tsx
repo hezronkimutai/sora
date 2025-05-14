@@ -45,7 +45,7 @@ export default async function DashboardPage() {
   return (
     <div className="container mx-auto p-4 space-y-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-2xl font-bold text-gray-900 w-full sm:w-auto text-center sm:text-left">My Files</h1>
+        <h1 className="text-2xl font-bold text-foreground w-full sm:w-auto text-center sm:text-left">My Files</h1>
         <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
           <CreateFolderButton />
           <UploadButton />
@@ -69,8 +69,8 @@ export default async function DashboardPage() {
 
         {folders.length === 0 && files.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No files or folders yet</p>
-            <p className="text-gray-400 mt-2">
+            <p className="text-foreground/70 text-lg">No files or folders yet</p>
+            <p className="text-foreground/60 mt-2">
               Upload files or create folders to get started
             </p>
           </div>
