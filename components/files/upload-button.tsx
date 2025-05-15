@@ -114,7 +114,7 @@ export function UploadButton({ folderId }: UploadButtonProps) {
       </button>
 
       {isUploading && (
-        <div className="fixed bottom-4 right-4 bg-background p-4 rounded-lg shadow-lg">
+        <div className="fixed bottom-4 right-4 bg-background p-4 rounded-lg shadow-lg z-[999999]">
           <div className="text-sm font-medium mb-2 text-foreground">Uploading...</div>
           <div className="w-64 h-2 bg-secondary/20 rounded-full overflow-hidden">
             <div

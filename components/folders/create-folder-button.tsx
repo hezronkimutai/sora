@@ -65,8 +65,8 @@ export function CreateFolderButton({ parentId }: CreateFolderButtonProps) {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-          <div className="bg-background p-6 rounded-lg w-full max-w-md">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[999999]">
+          <div className="bg-background p-6 rounded-lg w-full max-w-md relative z-[999999]">
             <h2 className="text-xl font-semibold mb-4 text-foreground">Create New Folder</h2>
             <form onSubmit={handleSubmit}>
               <input
